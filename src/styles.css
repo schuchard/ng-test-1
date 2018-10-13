@@ -1,1 +1,72 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+html,
+body {
+  display: block;
+  margin: 20px 50px;
+  padding: 0;
+}
+
+.title {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.main-content {
+  min-height: 80vh;
+}
+
+.todos-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.todos-form > * {
+  width: 100%;
+}
+
+.todos-list {
+  margin-top: 20px;
+}
+
+.todos-list-item {
+  display: flex;
+}
+
+.todos-list-item.completed:after{
+  border-top:2px solid #B0B0B0;
+  content:"";
+  display:block;
+  margin: -24px 50px 0 12px;
+}
+
+.todos-list-item:hover{
+  background-color: #F5F5F5;
+}
+
+.todos-list-item .description {
+  flex-grow: 1;
+}
+
+.todos-list-item .remove {
+  flex-shrink: 0;
+}
+
+.todos-list-item.completed .remove .icon {
+  color: #B0B0B0;
+}
+
+.todos-list-item .remove .icon {
+  opacity: 0.5;
+}
+
+.todos-list-item .remove .icon:hover {
+  color: #F44336;
+  opacity: 0.8;
+}
+
+.todos-list-item.completed .description {
+  opacity: 0.5;
+}

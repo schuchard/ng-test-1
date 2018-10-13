@@ -1,0 +1,6 @@
+<form class="todos-form" [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput formControlName="description" #todoDescription autocomplete="off" placeholder="What do you need to do?">
+  </mat-form-field>
+  <button  mat-raised-button [disabled]="!todoForm.valid" type="submit" >Add Todo</button>
+</form>
