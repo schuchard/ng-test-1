@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 import { TodosFormComponent } from './todos-form.component';
+import * as todosReducers from '@todos/store/reducers/todos.reducers';
 
 describe('TodosFormComponent', () => {
   let component: TodosFormComponent;
@@ -8,9 +11,15 @@ describe('TodosFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TodosFormComponent ]
-    })
-    .compileComponents();
+      imports: [
+        ReactiveFormsModule,
+        StoreModule.forRoot({
+          todos: todosReducers.todosReducer
+        })
+      ],
+      declarations: [TodosFormComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +28,7 @@ describe('TodosFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });
