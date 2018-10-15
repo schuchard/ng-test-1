@@ -1,10 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler/src/core';
-import { TodosService } from '@todos/services/todos.service';
 import { TodosComponent } from './todos.component';
-import * as todosReducers from '@todos/store/reducers/todos.reducers';
+import { LoadTodos } from '@todos/store/actions/todos.actions';
 
 describe('TodosComponent', () => {
   let component: TodosComponent;
@@ -17,13 +15,16 @@ describe('TodosComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        StoreModule.forRoot({
-          todos: todosReducers.todosReducer
-        })
+      providers: [
+        {
+          provide: Store,
+          useValue: {
+            dispatch: jest.fn(),
+            pipe: jest.fn(),
+            select: jest.fn()
+          }
+        }
       ],
-      providers: [TodosService],
       declarations: [TodosComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -33,12 +34,17 @@ describe('TodosComponent', () => {
     fixture = TestBed.createComponent(TodosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
-    const service: TodosService = TestBed.get(TodosService);
-    spyOn(service, 'getTodos').and.returnValue(todos);
   });
 
-  test('should create', () => {
-    expect(component).toBeTruthy();
+  describe('ngOnInit()', () => {
+    test('should dispatch LoadTodos', () => {
+      const action = new LoadTodos();
+      const store = TestBed.get(Store);
+      const spy = jest.spyOn(store, 'dispatch');
+
+      fixture.detectChanges();
+
+      expect(spy).toHaveBeenCalledWith(action);
+    });
   });
 });
